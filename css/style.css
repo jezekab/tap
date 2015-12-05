@@ -1,0 +1,14 @@
+body {
+  padding: 0px;
+  margin: 0px; }
+
+div {
+  height: 100px;
+  width: 100px;
+  float: left;
+  background-color: blue; }
+
+.changed {
+  background-color: green; }
+
+/*# sourceMappingURL=style.css.map */
