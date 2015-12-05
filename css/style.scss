@@ -10,6 +10,22 @@ div {
   background-color: blue;
 }
 
+#canvas {
+  margin: auto;
+  width: auto;
+  background-color: green;
+  overflow: hidden;
+}
+
 .changed {
   background-color: green;
+}
+
+section {
+  width: 100%;
+  background-color: lightgrey;
+  position: fixed;
+  bottom: 0;
+  padding: 20px;
+  border-top: 1px solid grey;
 }
