@@ -24,9 +24,9 @@ $(function () {
   $("div").css( "width", cell_size_css );
   $("div").css( "height", cell_size_css );
 
-  //to browser size on resize
+  //on resize
   $(window).resize(function () {
-    alert("You will lose your changes");
+    //alert("You will lose your changes");
   });
 
   //change color mode
@@ -43,6 +43,15 @@ $(function () {
   $( "#B" ).click(function() {
       mode = 3;
       alert(mode);
+  });
+
+  //change squares per row
+  $( "#minus" ).click(function() {
+    //cells_per_row++:
+  });
+  //
+  $( "#plus" ).click(function() {
+    //cells_per_row--:
   });
 
   //on cell click
@@ -71,9 +80,5 @@ $(function () {
     hsl = "hsl(" + hue + "," + sat + "% ," + bri + "%)";
     $(this).css( "background-color", hsl );
   });
-
-
-
-  //on change of mode
 
 });
