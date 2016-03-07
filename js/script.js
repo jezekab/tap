@@ -1,84 +1,125 @@
 $(function () {
 
-  //maths to figure out how many on screen
-  var w = window.innerWidth;
-  var h = window.innerHeight;
-  var cells_per_row = 10;
-  //var cells_per_col = h / cells_per_row
+    var Cell = function (divID) {
 
-  //set initial values
-  var mode = 1;
-  var hue = 50;
-  var sat = 50;
-  var bri = 50;
-  var hsl;
+        this.hue = 50;
+        this.sat = 50;
+        this.bri = 50;
 
-  //generate cells to screen
-  for (var i = 0; i < cells_per_row; i++) {
-    $("body").append("<div>");
-  }
+        this.cellWidth = 200;
+        this.cellHeight = 200;
 
-  //determine cell size
-  var cell_size = w / cells_per_row;
-  var cell_size_css = cell_size + "px";
-  $("div").css( "width", cell_size_css );
-  $("div").css( "height", cell_size_css );
+        this.divID = divID;
 
-  //on resize
-  $(window).resize(function () {
-    //alert("You will lose your changes");
-  });
+        this.drawCell = function () {
+            //create div
+            $("#canvas").append("<div class='cell' id='" + this.divID + "'></div>");
 
-  //change color mode
-  $( "#H" ).click(function() {
-      mode = 1;
-      alert(mode);
-  });
+            //set style
+            this.hsl = "hsl(" + this.hue + "," + this.sat + "% ," + this.bri + "%)";
+            $(".cell").css("width", this.cellWidth + "px")
+                .css("height", this.cellHeight + "px")
+                .css("background-color", this.hsl);
+        };
 
-  $( "#S" ).click(function() {
-      mode = 2;
-      alert(mode);
-  });
+        this.updateCell = function (mode) {
+            //check mode and update values
+            if (mode == 1) {
+                if (this.hue > 360 - 36) {
+                    this.hue = 0;
+                } else {
+                    this.hue += 36
+                }
+            } else if (mode == 2) {
+                if (this.sat > 90) {
+                    this.sat = 0;
+                } else {
+                    this.sat += 10
+                }
+            } else if (mode == 3) {
+                if (this.bri > 90) {
+                    this.bri = 0;
+                } else {
+                    this.bri += 10
+                }
+            }
 
-  $( "#B" ).click(function() {
-      mode = 3;
-      alert(mode);
-  });
+            //change colour of div
+            this.hsl = "hsl(" + this.hue + "," + this.sat + "% ," + this.bri + "%)";
+            $('#' + this.divID).css("background-color", this.hsl);
 
-  //change squares per row
-  $( "#minus" ).click(function() {
-    //cells_per_row++:
-  });
-  //
-  $( "#plus" ).click(function() {
-    //cells_per_row--:
-  });
+        };
 
-  //on cell click
-  $( "div" ).click(function() {
-    if (mode == 1) {
-      if (hue > 360 - 36) {
-        hue = 0;
-      } else {
-        hue += 36
-      }
-      hue += 36;
-    } else if (mode == 2) {
-      if (sat > 90) {
-        sat = 0;
-      } else {
-        sat += 10
-      }
-    } else if (mode == 3){
-      if (bri > 90) {
-        bri = 0;
-      } else {
-        bri += 10
-      }
+        //set width&height
+
+    };
+
+    //set initial values
+    var mode = 1;
+    //var screenWidth = $('body').width;
+    var cellArray = [];
+
+    var cellsPerRow = 10;
+    //var cellSize = screenwidth / cellsPerRow;
+
+    //draw grid
+    for (var i = 0; i < cellsPerRow; i++) {
+        cellArray[i] = new Cell(i);
+        cellArray[i].drawCell();
     }
 
-    hsl = "hsl(" + hue + "," + sat + "% ," + bri + "%)";
-    $(this).css( "background-color", hsl );
-  });
+    //update cells
+    $('.cell').each(function () {
+        $(this).click(function () {
+            cellArray[$(this).attr('id')].updateCell(mode);
+            console.log(mode);
+        });
+    });
+
+    ////determine cell size
+    //var cell_size = w / cells_per_row;
+
+    //maths to figure out how many on screen
+    //var w = window.innerWidth;
+    //var h = window.innerHeight;
+    //var cells_per_col = h / cells_per_row
+
+
+    //on resize
+    $(window).resize(function () {
+        //alert("You will lose your changes");
+    });
+
+    //change color mode
+    $("#H").click(function () {
+        mode = 1;
+        console.log(mode);
+    });
+
+    $("#S").click(function () {
+        mode = 2;
+        console.log(mode);
+    });
+
+    $("#B").click(function () {
+        mode = 3;
+        console.log(mode);
+    });
+
+    //change squares per row
+    $("#minus").click(function () {
+        //cells_per_row++:
+    });
+    //
+    $("#plus").click(function () {
+        //cells_per_row--:
+    });
+
+    //on cell click
+    $("div").click(function () {
+
+    });
 
 });
+
+
