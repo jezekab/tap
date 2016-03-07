@@ -1,31 +1,56 @@
 body {
-  padding: 0px;
-  margin: 0px;
+  padding: 0;
+  margin: 0;
+  //background-color: #333;
 }
 
 div {
   height: 100px;
   width: 100px;
   float: left;
-  background-color: blue;
+  //background-color: blue;
+  //margin-bottom: -5px;
 }
 
 #canvas {
   margin: auto;
-  width: auto;
-  background-color: green;
-  overflow: hidden;
+  //border: 2px solid #222;
+  overflow: auto;
+  width: 100%;
+  background-color: white;
 }
 
 .changed {
   background-color: green;
 }
 
-section {
+input {
+  background-color: white;
+  color: #333;
+  padding: 10px;
+  border: none;
+  font-weight: 700;
+  width: 40px;
+  height: 40px;
+}
+
+input.selected {
+  background-color: #666;
+}
+
+section#leftovers {
+  height: 0;
+  background-color: #333;
+  position: relative;
+  top: 0;
   width: 100%;
-  background-color: lightgrey;
+}
+
+section#controls{
+  width: 100%;
+  background-color: #333;
   position: fixed;
   bottom: 0;
-  padding: 20px;
-  border-top: 1px solid grey;
+  padding: 20px; //height is 80px
+  border-top: 1px solid #222;
 }

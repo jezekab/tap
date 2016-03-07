@@ -1,13 +1,18 @@
 $(function () {
 
-    var Cell = function (divID) {
+    // minimum cells per row/column
+    // prevent resize
+    // new canvas - specify cells per row
+    // select multiple and click to change
+    // save image from html
+
+    var Cell = function (divID, cellSize) {
 
         this.hue = 50;
         this.sat = 50;
-        this.bri = 50;
+        this.bri = 100;
 
-        this.cellWidth = 200;
-        this.cellHeight = 200;
+        this.cellSize = cellSize;
 
         this.divID = divID;
 
@@ -17,30 +22,34 @@ $(function () {
 
             //set style
             this.hsl = "hsl(" + this.hue + "," + this.sat + "% ," + this.bri + "%)";
-            $(".cell").css("width", this.cellWidth + "px")
-                .css("height", this.cellHeight + "px")
+            $(".cell").css("width", this.cellSize + "px")
+                .css("height", this.cellSize + "px")
                 .css("background-color", this.hsl);
+
+            //clearfix
+
+            //$("#canvas").append('<div style="clear:both"></div>');
         };
 
         this.updateCell = function (mode) {
             //check mode and update values
             if (mode == 1) {
-                if (this.hue > 360 - 36) {
+                if (this.hue >= 360 - 36) {
                     this.hue = 0;
                 } else {
                     this.hue += 36
                 }
             } else if (mode == 2) {
-                if (this.sat > 90) {
+                if (this.sat >= 90) {
                     this.sat = 0;
                 } else {
                     this.sat += 10
                 }
             } else if (mode == 3) {
-                if (this.bri > 90) {
-                    this.bri = 0;
+                if (this.bri <= 10) {
+                    this.bri = 100;
                 } else {
-                    this.bri += 10
+                    this.bri -= 10
                 }
             }
 
@@ -55,16 +64,24 @@ $(function () {
     };
 
     //set initial values
-    var mode = 1;
-    //var screenWidth = $('body').width;
+    var mode = 3;
     var cellArray = [];
 
-    var cellsPerRow = 10;
-    //var cellSize = screenwidth / cellsPerRow;
+    var controlsHeight = 80;
+
+    var cellsPerRow = 15;
+    var canvasWidth = $('#canvas').width();
+    var canvasHeight = $(window).height() - controlsHeight;
+    var cellSize = canvasWidth / cellsPerRow;
+    var cellsPerCol = Math.floor(canvasHeight / cellSize);
+    var leftOvers = canvasHeight % cellSize;
+
+    //leftovers bar
+    $('#leftovers').css('height', leftOvers + 'px');
 
     //draw grid
-    for (var i = 0; i < cellsPerRow; i++) {
-        cellArray[i] = new Cell(i);
+    for (var i = 0; i < cellsPerRow * cellsPerCol; i++) {
+        cellArray[i] = new Cell(i, cellSize);
         cellArray[i].drawCell();
     }
 
@@ -76,15 +93,6 @@ $(function () {
         });
     });
 
-    ////determine cell size
-    //var cell_size = w / cells_per_row;
-
-    //maths to figure out how many on screen
-    //var w = window.innerWidth;
-    //var h = window.innerHeight;
-    //var cells_per_col = h / cells_per_row
-
-
     //on resize
     $(window).resize(function () {
         //alert("You will lose your changes");
@@ -93,17 +101,20 @@ $(function () {
     //change color mode
     $("#H").click(function () {
         mode = 1;
-        console.log(mode);
+        $('input').removeClass('selected');
+        $(this).addClass('selected');
     });
 
     $("#S").click(function () {
         mode = 2;
-        console.log(mode);
+        $('input').removeClass('selected');
+        $(this).addClass('selected');
     });
 
     $("#B").click(function () {
         mode = 3;
-        console.log(mode);
+        $('input').removeClass('selected');
+        $(this).addClass('selected');
     });
 
     //change squares per row
